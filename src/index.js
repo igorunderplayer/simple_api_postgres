@@ -31,6 +31,17 @@ app.get('/users', async (req, res) => {
   res.send(rows)
 })
 
+app.delete('/users', async (req, res) => {
+  if (!req.body.id) {
+    res.status(400).send('Missing id')
+    return
+  }
+
+  const query = 'DELETE FROM Users WHERE id = $1'
+  await client.query(query, [req.body.id])
+  res.send('User deleted')
+})
+
 app.post('/users', async (req, res) => {
   if(!req.body.name) {
     res.status(400).send('Name is required')
