@@ -42,8 +42,7 @@ app.post('/users', async (req, res) => {
     query,
     [req.body.name]
   )
-
-  res.json(rows)
+  res.json(rows[0])
 })
 
 app.listen(PORT, () => {
