@@ -2,20 +2,16 @@ const { Client } = require('pg')
 const express = require('express')
 const app = express()
 
-console.log('Creating db client')
-
 const client = new Client({
-  user: 'postgres',
-  host: 'postgres',
-  database: 'postgres',
-  password: 'postgrespassword',
-  port: 5432,
+  connectionString: process.env.DATABASE_URL,
+  ssl: process.env.NODE_ENV != 'production' ? false : {
+    rejectUnauthorized: false
+  }
 })
 
-console.log('indo conecta')
-
+console.log('Connecting to database...')
 client.connect().then(() => {
-  console.log('Conectado')
+  console.log('Database connected!')
 })
 
 const PORT = process.env.PORT || 8080
